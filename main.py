@@ -184,7 +184,7 @@ async def upload(bot: Client, m: Message):
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
 
             elif 'videos.classplusapp' in url:
-                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': 'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpZCI6MzgzNjkyMTIsIm9yZ0lkIjoyNjA1LCJ0eXBlIjoxLCJtb2JpbGUiOiI5MTcwODI3NzQyODkiLCJuYW1lIjoiQWNlIiwiZW1haWwiOm51bGwsImlzRmlyc3RMb2dpbiI6dHJ1ZSwiZGVmYXVsdExhbmd1YWdlIjpudWxsLCJjb3VudHJ5Q29kZSI6IklOIiwiaXNJbnRlcm5hdGlvbmFsIjowLCJpYXQiOjE2NDMyODE4NzcsImV4cCI6MTY0Mzg4NjY3N30.hM33P2ai6ivdzxPPfm01LAd4JWv-vnrSxGXqvCirCSpUfhhofpeqyeHPxtstXwe0'}).json()['url']
+                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': 'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQxMjY4NjA0LCJvcmdJZCI6NzExNTI4LCJvcmdDb2RlIjoidWphbGFmIiwib3JnTmFtZSI6IlNhcnJ0aGlJQVMiLCJuYW1lIjoiU2R2IiwiZW1haWwiOiJ1cC51bmtub3dua2lsbGVyMTEyMkBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTk4Mzg2MzIxNTQiLCJ0eXBlIjoxLCJpc0RpeSI6dHJ1ZSwiaXNJbnRlcm5hdGlvbmFsIjowLCJkZWZhdWx0TGFuZ3VhZ2UiOiJFTiIsImNvdW50cnlDb2RlIjoiSU4iLCJ0aW1lem9uZSI6IkdNVCs1OjMwIiwiY291bnRyeUlTTyI6IjkxIiwiaXNEaXlTdWJhZG1pbiI6MCwiZmluZ2VycHJpbnRJZCI6ImVmNzVhMzA0Mjg3NmM2ZDNhNWY0OGY0OTQ5MDVjYTU4IiwiaWF0IjoxNzM4NDkxNjc5LCJleHAiOjE3MzkwOTY0Nzl9.K0qwqLD7xIYJVIdQ0ZxRXXzsKudtI7hNCsBz73gfbYt37_abBlVwMvanYpC-R_yZ'}).json()['url']
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
             name = f'{str(count).zfill(3)}) {name1[:60]}'
