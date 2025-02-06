@@ -55,7 +55,7 @@ async def upload(bot: Client, m: Message):
     # Check if the user has exceeded daily limit
     if user_id in user_daily_limits:
         if user_daily_limits[user_id] >= MAX_LINKS_PER_USER:
-            await m.reply_text("**You have reached your daily limit of 20 links.**")
+            await m.reply_text("**You have reached your daily limit of 15 links.**")
             return
 
     # Check if the bot is busy with maximum users
