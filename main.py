@@ -41,7 +41,7 @@ bot = Client(
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"<b>Hello {m.from_user.mention} рЯСЛ\n\n I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram So Basically If You Want To Use Me First Send Me /upload Command And Then Follow Few Steps..\n\nUse /stop to stop any ongoing task.</b>")
+    await m.reply_text(f"<b>𝑯𝒆𝒍𝒍𝒐 {m.fromuser.mention}  👋✨\n\n𝑰 𝒂𝒎 𝒂 𝑻𝑿𝑻 𝑳𝒊𝒏𝒌 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅𝒆𝒓 𝑩𝒐𝒕! 📥 𝑴𝒚 𝒑𝒖𝒓𝒑𝒐𝒔𝒆 𝒊𝒔 𝒕𝒐 𝒆𝒙𝒕𝒓𝒂𝒄𝒕 𝒅𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝒍𝒊𝒏𝒌𝒔 𝒇𝒓𝒐𝒎 𝒚𝒐𝒖𝒓 .𝑻𝑿𝑻 𝒇𝒊𝒍𝒆 📄 𝒂𝒏𝒅 𝒖𝒑𝒍𝒐𝒂𝒅 𝒕𝒉𝒆 𝒄𝒐𝒏𝒕𝒆𝒏𝒕 𝒅𝒊𝒓𝒆𝒄𝒕𝒍𝒚 𝒕𝒐 𝑻𝒆𝒍𝒆𝒈𝒓𝒂𝒎 📲. 𝑻𝒐 𝒈𝒆𝒕 𝒔𝒕𝒂𝒓𝒕𝒆𝒅, 𝒔𝒊𝒎𝒑𝒍𝒚 𝒔𝒆𝒏𝒅 𝒎𝒆 𝒕𝒉𝒆 /upload 𝒄𝒐𝒎𝒎𝒂𝒏𝒅 𝒂𝒏𝒅 𝒇𝒐𝒍𝒍𝒐𝒘 𝒕𝒉𝒆 𝒑𝒓𝒐𝒎𝒑𝒕𝒔. 🚀\n\n𝑫𝒐𝒏'𝒕 𝒇𝒐𝒓𝒈𝒆𝒕 𝒕𝒐 𝒋𝒐𝒊𝒏 𝒐𝒖𝒓 𝒖𝒑𝒅𝒂𝒕𝒆 𝒄𝒉𝒂𝒏𝒏𝒆𝒍 @SDV_BOTS 𝒇𝒐𝒓 𝒕𝒉𝒆 𝒍𝒂𝒕𝒆𝒔𝒕 𝒏𝒆𝒘𝒔 𝒂𝒏𝒅 𝒇𝒆𝒂𝒕𝒖𝒓𝒆𝒔! 📰🔔\n\n𝑼𝒔𝒆 /stop 𝒕𝒐 𝒄𝒂𝒏𝒄𝒆𝒍 𝒂𝒏𝒚 𝒐𝒏𝒈𝒐𝒊𝒏𝒈 𝒕𝒂𝒔𝒌𝒔. ❌</b>")
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
@@ -90,12 +90,12 @@ async def upload(bot: Client, m: Message):
     has_master_mpd = any("/master.mpd" in link[1] for link in links)
 
     if has_master_mpd:
-        await editable.edit("**рЭСµрЭТРрЭТШ рЭТФрЭТЖрЭТПрЭТЕ рЭТЪрЭТРрЭТЦрЭТУ рЭСЈрЭСЊ рЭТЦрЭТФрЭТЖрЭТНрЭТЖрЭТФрЭТФ рЭТВрЭТДрЭТХрЭТКрЭТЧрЭТЖ рЭТХрЭТРрЭТМрЭТЖрЭТП.**")
+        await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
         token_input: Message = await bot.listen(editable.chat.id)
         token = token_input.text
         await token_input.delete(True)
 
-    await editable.edit(f"**рЭХЛбіПбіЫбіА Я  Я…™…ібіЛрЭХ§ “УбіПбіЬ…ібіЕ біА АбіЗрЯФЧрЯФЧ** **{len(links)}**\n\n**рЭХКбіЗ…ібіЕ рЭФљ АбіПбіН бі° ЬбіЗ АбіЗ  ПбіПбіЬ бі°біА…ібіЫ біЫбіП біЕбіПбі°…і ЯбіПбіАбіЕ …™…і…™біЫ…™біА Я …™рЭХ§** **1**")
+    await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
     await input0.delete(True)
@@ -105,7 +105,7 @@ async def upload(bot: Client, m: Message):
     raw_text0 = input1.text
     await input1.delete(True)
 
-    await editable.edit("**рЭФЉ…ібіЫбіЗ А  АбіЗрЭХ§біП ЯбіЬбіЫ…™біП…ірЯУЄ**\n144,240,360,480,720,1080 please choose quality")
+    await editable.edit("**𝔼ɴᴛᴇʀ ʀᴇ𝕤ᴏʟᴜᴛɪᴏɴ📸**\n144\n240\n360\n480\n720 please choose quality")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
     await input2.delete(True)
@@ -131,7 +131,7 @@ async def upload(bot: Client, m: Message):
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
-    highlighter = f"пЄП вБ™вБђвБЃвБЃвБЃ"
+    highlighter = f""
     if raw_text3 == 'Robin':
         MR = highlighter
     else:
@@ -200,8 +200,8 @@ async def upload(bot: Client, m: Message):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[рЯУљпЄП] Vid_ID:** {str(count).zfill(3)}.** {name1}{MR}.mkv\n**рЭФєбіАбіЫбіД Ь** ¬ї **{raw_text0}**'
-                cc1 = f'**[рЯУБ] Pdf_ID:** {str(count).zfill(3)}. {name1}{MR}.pdf \n**рЭФєбіАбіЫбіД Ь** ¬ї **{raw_text0}**'
+                cc = f'**[📽️] Vid_ID:** {str(count).zfill(3)}.** {name1}{MR}.mkv\n**𝔹ᴀᴛᴄʜ** » **{raw_text0}**'
+                cc1 = f'**[📁] Pdf_ID:** {str(count).zfill(3)}. {name1}{MR}.pdf \n**𝔹ᴀᴛᴄʜ** » **{raw_text0}**'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -227,7 +227,7 @@ async def upload(bot: Client, m: Message):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**в•• рЯД≥рЯДЊрЯЕЖрЯДљрЯДїрЯДЊрЯД∞рЯД≥рЯДЄрЯДљрЯДґвђЗпЄПвђЗпЄП... ¬ї**\n\n**рЯУЭName ¬ї** `{name}\nвЭДQuality ¬ї {raw_text2}`\n\n**рЯФЧURL ¬ї** `{url}`"
+                    Show = f"**⥥ 🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶⬇️⬇️... »**\n\n**📝Name »** `{name}\n❄Quality » {raw_text2}`\n\n**🔗URL »** `{url}`"
                     prog = await m.reply_text(Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
@@ -249,7 +249,6 @@ async def upload(bot: Client, m: Message):
         if user_id in active_users:
             del active_users[user_id]
 
-    await m.reply_text("**рЭФїбіП…ібіЗ рЭФєбіПрЭХ§рЭХ§рЯШО**")
-
+    await m.reply_text("**🄰🄻🄻 𝔻ᴏɴᴇ 😏**")
 
 bot.run()
