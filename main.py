@@ -41,7 +41,7 @@ bot = Client(
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"𝑯𝒆𝒍𝒍𝒐 {m.fromuser.mention} 👋✨\n\n𝑰 𝒂𝒎 𝒂 𝑻𝑿𝑻 𝑳𝒊𝒏𝒌 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅𝒆𝒓 𝑩𝒐𝒕! 📥 𝑴𝒚 𝒑𝒖𝒓𝒑𝒐𝒔𝒆 𝒊𝒔 𝒕𝒐 𝒆𝒙𝒕𝒓𝒂𝒄𝒕 𝒅𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝒍𝒊𝒏𝒌𝒔 𝒇𝒓𝒐𝒎 𝒚𝒐𝒖𝒓 .𝑻𝑿𝑻 𝒇𝒊𝒍𝒆 📄 𝒂𝒏𝒅 𝒖𝒑𝒍𝒐𝒂𝒅 𝒕𝒉𝒆 𝒄𝒐𝒏𝒕𝒆𝒏𝒕 𝒅𝒊𝒓𝒆𝒄𝒕𝒍𝒚 𝒕𝒐 𝑻𝒆𝒍𝒆𝒈𝒓𝒂𝒎 📲. 𝑻𝒐 𝒈𝒆𝒕 𝒔𝒕𝒂𝒓𝒕𝒆𝒅, 𝒔𝒊𝒎𝒑𝒍𝒚 𝒔𝒆𝒏𝒅 𝒎𝒆 𝒕𝒉𝒆 /upload 𝒄𝒐𝒎𝒎𝒂𝒏𝒅 𝒂𝒏𝒅 𝒇𝒐𝒍𝒍𝒐𝒘 𝒕𝒉𝒆 𝒑𝒓𝒐𝒎𝒑𝒕𝒔. 🚀\n\n𝑫𝒐𝒏'𝒕 𝒇𝒐𝒓𝒈𝒆𝒕 𝒕𝒐 𝒋𝒐𝒊𝒏 𝒐𝒖𝒓 𝒖𝒑𝒅𝒂𝒕𝒆 𝒄𝒉𝒂𝒏𝒏𝒆𝒍 @SDV_BOTS 𝒇𝒐𝒓 𝒕𝒉𝒆 𝒍𝒂𝒕𝒆𝒔𝒕 𝒏𝒆𝒘𝒔 𝒂𝒏𝒅 𝒇𝒆𝒂𝒕𝒖𝒓𝒆𝒔! 📰🔔\n\n𝑼𝒔𝒆 /stop 𝒕𝒐 𝒄𝒂𝒏𝒄𝒆𝒍 𝒂𝒏𝒚 𝒐𝒏𝒈𝒐𝒊𝒏𝒈 𝒕𝒂𝒔𝒌𝒔. ❌")
+    await m.reply_text(f"<b>Hello {m.fromuser.mention} 👋✨\n\nI am a TXT Link Downloader Bot! 📥 My purpose is to extract download links from your .TXT file 📄 and upload the content directly to Telegram 📲. To get started, simply send me the /upload command and follow the prompts.🚀\n\nDon't forget to join our update channel @SDV_BOTS for the latest news and features! 📰🔔\n\nUse /stop to cancel any ongoing tasks.❌</b>")
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
