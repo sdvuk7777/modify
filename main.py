@@ -31,6 +31,7 @@ MAX_USERS = 5
 MAX_LINKS_PER_USER = 20
 active_users = {}
 user_daily_limits = {}
+last_reset_time = datetime.now()
 
 bot = Client(
     "bot",
@@ -39,8 +40,19 @@ bot = Client(
     bot_token=BOT_TOKEN
 )
 
+def reset_daily_limits():
+    """Reset daily limits at midnight"""
+    global user_daily_limits, last_reset_time
+    current_time = datetime.now()
+    
+    # Reset limits if it's a new day
+    if current_time.date() > last_reset_time.date():
+        user_daily_limits = {}
+        last_reset_time = current_time
+
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
+    reset_daily_limits()
     await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram So Basically If You Want To Use Me First Send Me /upload Command And Then Follow Few Steps..\n\nUse /stop to stop any ongoing task.</b>")
 
 @bot.on_message(filters.command("stop"))
@@ -50,41 +62,48 @@ async def restart_handler(_, m):
 
 @bot.on_message(filters.command(["upload"]))
 async def upload(bot: Client, m: Message):
+    reset_daily_limits()
     user_id = m.from_user.id
 
     # Check if the user has exceeded daily limit
     if user_id in user_daily_limits:
         if user_daily_limits[user_id] >= MAX_LINKS_PER_USER:
-            await m.reply_text("**You have reached your daily limit of 20 links.**")
+            await m.reply_text(f"**You have reached your daily limit of {MAX_LINKS_PER_USER} links. Please try again tomorrow.**")
             return
 
     # Check if the bot is busy with maximum users
     if len(active_users) >= MAX_USERS:
-        await m.reply_text("**Server is busy. Please try again later.**")
+        user_list = list(active_users.keys())
+        user_names = [f"@{(await bot.get_users(uid)).username}" for uid in user_list]
+        await m.reply_text(f"**Server is currently processing requests for {len(active_users)} users:** {', '.join(user_names)}.\n\n**Please wait and try again in a few moments.**")
         return
 
-    # Add user to active users
-    active_users[user_id] = True
-
-    editable = await m.reply_text('𝕤ᴇɴᴅ ᴛxᴛ ғɪʟᴇ ⚡️')
-    input: Message = await bot.listen(editable.chat.id)
-    x = await input.download()
-    await input.delete(True)
-
-    path = f"./downloads/{m.chat.id}"
+    # Add user to active users with a unique identifier
+    active_users[user_id] = {
+        'start_time': datetime.now(),
+        'username': m.from_user.username or m.from_user.first_name
+    }
 
     try:
-        with open(x, "r") as f:
-            content = f.read()
-        content = content.split("\n")
-        links = []
-        for i in content:
-            links.append(i.split("://", 1))
-        os.remove(x)
-    except:
-        await m.reply_text("**Invalid file input.**")
-        os.remove(x)
-        return
+        editable = await m.reply_text('𝕤ᴇɴᴅ ᴛxᴛ ғɪʟᴇ ⚡️')
+        input: Message = await bot.listen(editable.chat.id)
+        x = await input.download()
+        await input.delete(True)
+
+        path = f"./downloads/{m.chat.id}"
+
+        try:
+            with open(x, "r") as f:
+                content = f.read()
+            content = content.split("\n")
+            links = []
+            for i in content:
+                links.append(i.split("://", 1))
+            os.remove(x)
+        except:
+            await m.reply_text("**Invalid file input.**")
+            os.remove(x)
+            return
 
     # Check if the file contains master.mpd links
     has_master_mpd = any("/master.mpd" in link[1] for link in links)
@@ -241,9 +260,8 @@ async def upload(bot: Client, m: Message):
                     f"**downloading Interupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`"
                 )
                 continue
-
     except Exception as e:
-        await m.reply_text(e)
+        await m.reply_text(f"An error occurred: {str(e)}")
     finally:
         # Remove user from active users
         if user_id in active_users:
@@ -251,5 +269,20 @@ async def upload(bot: Client, m: Message):
 
     await m.reply_text("**𝔻ᴏɴᴇ 𝔹ᴏ𝕤𝕤😎**")
 
+# Background task to clean up inactive users
+async def cleanup_active_users():
+    while True:
+        await asyncio.sleep(300)  # Check every 5 minutes
+        current_time = datetime.now()
+        inactive_users = [
+            uid for uid, user_data in active_users.items()
+            if (current_time - user_data['start_time']).total_seconds() > 1800  # 30 minutes
+        ]
+        
+        for uid in inactive_users:
+            del active_users[uid]
+
+# Start the cleanup task
+bot.loop.create_task(cleanup_active_users())
 
 bot.run()
