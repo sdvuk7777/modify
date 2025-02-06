@@ -28,7 +28,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 # Global variables for user limits
 MAX_USERS = 5
-MAX_LINKS_PER_USER = 20
+MAX_LINKS_PER_USER = 2
 active_users = {}
 user_daily_limits = {}
 
