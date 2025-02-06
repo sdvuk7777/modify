@@ -28,7 +28,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 # Global variables for user limits
 MAX_USERS = 5
-MAX_LINKS_PER_USER = 2
+MAX_LINKS_PER_USER = 20
 active_users = {}
 user_daily_limits = {}
 last_reset_time = datetime.now()
@@ -74,7 +74,11 @@ async def upload(bot: Client, m: Message):
     # Check if the bot is busy with maximum users
     if len(active_users) >= MAX_USERS:
         user_list = list(active_users.keys())
-        user_names = [f"@{(await bot.get_users(uid)).username}" for uid in user_list]
+        try:
+            user_names = [f"@{(await bot.get_users(uid)).username}" for uid in user_list]
+        except Exception:
+            user_names = [str(uid) for uid in user_list]
+        
         await m.reply_text(f"**Server is currently processing requests for {len(active_users)} users:** {', '.join(user_names)}.\n\n**Please wait and try again in a few moments.**")
         return
 
@@ -98,23 +102,33 @@ async def upload(bot: Client, m: Message):
             content = content.split("\n")
             links = []
             for i in content:
-                links.append(i.split("://", 1))
+                # Safely handle links that might not have "://"
+                link_parts = i.split("://", 1)
+                if len(link_parts) == 2:
+                    links.append(link_parts)
+                elif len(link_parts) == 1 and link_parts[0].strip():
+                    links.append(["", link_parts[0]])
             os.remove(x)
-        except:
-            await m.reply_text("**Invalid file input.**")
-            os.remove(x)
+        except Exception as file_error:
+            await m.reply_text(f"**Invalid file input:** {str(file_error)}")
+            if os.path.exists(x):
+                os.remove(x)
             return
 
-    # Check if the file contains master.mpd links
-    has_master_mpd = any("/master.mpd" in link[1] for link in links)
+        # Check if the file contains master.mpd links
+        has_master_mpd = False
+        try:
+            has_master_mpd = any("/master.mpd" in (link[1] if len(link) > 1 else "") for link in links)
+        except Exception:
+            pass
 
-    if has_master_mpd:
-        await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
-        token_input: Message = await bot.listen(editable.chat.id)
-        token = token_input.text
-        await token_input.delete(True)
+        if has_master_mpd:
+            await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
+            token_input: Message = await bot.listen(editable.chat.id)
+            token = token_input.text
+            await token_input.delete(True)
 
-    await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
+        await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
     await input0.delete(True)
@@ -260,6 +274,7 @@ async def upload(bot: Client, m: Message):
                     f"**downloading Interupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`"
                 )
                 continue
+
     except Exception as e:
         await m.reply_text(f"An error occurred: {str(e)}")
     finally:
