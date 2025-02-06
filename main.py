@@ -122,95 +122,95 @@ async def upload(bot: Client, m: Message):
         except Exception:
             pass
 
-        if has_master_mpd:
-            await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
-            token_input: Message = await bot.listen(editable.chat.id)
-            token = token_input.text
-            await token_input.delete(True)
+        try:
+            if has_master_mpd:
+                await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
+                token_input: Message = await bot.listen(editable.chat.id)
+                token = token_input.text
+                await token_input.delete(True)
 
-        await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
-    input0: Message = await bot.listen(editable.chat.id)
-    raw_text = input0.text
-    await input0.delete(True)
+            await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
+            input0: Message = await bot.listen(editable.chat.id)
+            raw_text = input0.text
+            await input0.delete(True)
 
-    await editable.edit("**Now Please Send Me Your Batch Name**")
-    input1: Message = await bot.listen(editable.chat.id)
-    raw_text0 = input1.text
-    await input1.delete(True)
+            await editable.edit("**Now Please Send Me Your Batch Name**")
+            input1: Message = await bot.listen(editable.chat.id)
+            raw_text0 = input1.text
+            await input1.delete(True)
 
-    await editable.edit("**𝔼ɴᴛᴇʀ ʀᴇ𝕤ᴏʟᴜᴛɪᴏɴ📸**\n144,240,360,480,720,1080 please choose quality")
-    input2: Message = await bot.listen(editable.chat.id)
-    raw_text2 = input2.text
-    await input2.delete(True)
-    try:
-        if raw_text2 == "144":
-            res = "256x144"
-        elif raw_text2 == "240":
-            res = "426x240"
-        elif raw_text2 == "360":
-            res = "640x360"
-        elif raw_text2 == "480":
-            res = "854x480"
-        elif raw_text2 == "720":
-            res = "1280x720"
-        elif raw_text2 == "1080":
-            res = "1920x1080"
-        else:
-            res = "UN"
-    except Exception:
-        res = "UN"
+            await editable.edit("**𝔼ɴᴛᴇʀ ʀᴇ𝕤ᴏʟᴜᴛɪᴏɴ📸**\n144,240,360,480,720,1080 please choose quality")
+            input2: Message = await bot.listen(editable.chat.id)
+            raw_text2 = input2.text
+            await input2.delete(True)
+            try:
+                if raw_text2 == "144":
+                    res = "256x144"
+                elif raw_text2 == "240":
+                    res = "426x240"
+                elif raw_text2 == "360":
+                    res = "640x360"
+                elif raw_text2 == "480":
+                    res = "854x480"
+                elif raw_text2 == "720":
+                    res = "1280x720"
+                elif raw_text2 == "1080":
+                    res = "1920x1080"
+                else:
+                    res = "UN"
+            except Exception:
+                res = "UN"
 
-    await editable.edit("Now Enter A Caption to add caption on your uploaded file")
-    input3: Message = await bot.listen(editable.chat.id)
-    raw_text3 = input3.text
-    await input3.delete(True)
-    highlighter = f"️ ⁪⁬⁮⁮⁮"
-    if raw_text3 == 'Robin':
-        MR = highlighter
-    else:
-        MR = raw_text3
-
-    await editable.edit("Now send the Thumb url\nEg » https://iili.io/2LBPdRj.md.jpg \n Or if don't want thumbnail send = no")
-    input6 = message = await bot.listen(editable.chat.id)
-    raw_text6 = input6.text
-    await input6.delete(True)
-    await editable.delete()
-
-    thumb = input6.text
-    if thumb.startswith("http://") or thumb.startswith("https://"):
-        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
-        thumb = "thumb.jpg"
-    else:
-        thumb == "no"
-
-    if len(links) == 1:
-        count = 1
-    else:
-        count = int(raw_text)
-
-    try:
-        for i in range(count - 1, len(links)):
-            # Update user's daily limit
-            if user_id in user_daily_limits:
-                user_daily_limits[user_id] += 1
+            await editable.edit("Now Enter A Caption to add caption on your uploaded file")
+            input3: Message = await bot.listen(editable.chat.id)
+            raw_text3 = input3.text
+            await input3.delete(True)
+            highlighter = f"️ ⁪⁬⁮⁮⁮"
+            if raw_text3 == 'Robin':
+                MR = highlighter
             else:
-                user_daily_limits[user_id] = 1
+                MR = raw_text3
 
-            # Check if user has reached daily limit
-            if user_daily_limits[user_id] > MAX_LINKS_PER_USER:
-                await m.reply_text("**You have reached your daily limit of 20 links.**")
-                break
+            await editable.edit("Now send the Thumb url\nEg » https://iili.io/2LBPdRj.md.jpg \n Or if don't want thumbnail send = no")
+            input6 = message = await bot.listen(editable.chat.id)
+            raw_text6 = input6.text
+            await input6.delete(True)
+            await editable.delete()
 
-            V = links[i][1].replace("file/d/", "uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing", "")
-
-            # Handle new master.mpd URLs
-            if "/master.mpd" in V:
-                video_id = V.split("/")[-2]  # Extract video_id from URL
-                url = f"https://madxapi-d0cbf6ac738c.herokuapp.com/{video_id}/master.m3u8?token={token}"
+            thumb = input6.text
+            if thumb.startswith("http://") or thumb.startswith("https://"):
+                getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
+                thumb = "thumb.jpg"
             else:
-                url = "https://" + V
+                thumb = "no"
 
-            if "visionias" in url:
+            if len(links) == 1:
+                count = 1
+            else:
+                count = int(raw_text)
+
+            for i in range(count - 1, len(links)):
+                # Update user's daily limit
+                if user_id in user_daily_limits:
+                    user_daily_limits[user_id] += 1
+                else:
+                    user_daily_limits[user_id] = 1
+
+                # Check if user has reached daily limit
+                if user_daily_limits[user_id] > MAX_LINKS_PER_USER:
+                    await m.reply_text("**You have reached your daily limit of 20 links.**")
+                    break
+
+                V = links[i][1].replace("file/d/", "uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing", "")
+
+                # Handle new master.mpd URLs
+                if "/master.mpd" in V:
+                    video_id = V.split("/")[-2]  # Extract video_id from URL
+                    url = f"https://madxapi-d0cbf6ac738c.herokuapp.com/{video_id}/master.m3u8?token={token}"
+                else:
+                    url = "https://" + V
+
+                if "visionias" in url:
                 async with ClientSession() as session:
                     async with session.get(url, headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language': 'en-US,en;q=0.9', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Pragma': 'no-cache', 'Referer': 'http://www.visionias.in/', 'Sec-Fetch-Dest': 'iframe', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'cross-site', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 12; RMX2121) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36', 'sec-ch-ua': '"Chromium";v="107", "Not=A?Brand";v="24"', 'sec-ch-ua-mobile': '?1', 'sec-ch-ua-platform': '"Android"'}) as resp:
                         text = await resp.text()
@@ -276,7 +276,13 @@ async def upload(bot: Client, m: Message):
                 continue
 
     except Exception as e:
-        await m.reply_text(f"An error occurred: {str(e)}")
+        await m.reply_text(e)
+        
+        except Exception as process_error:
+            await m.reply_text(f"An error occurred during processing: {str(process_error)}")
+
+    except Exception as main_error:
+        await m.reply_text(f"A main error occurred: {str(main_error)}")
     finally:
         # Remove user from active users
         if user_id in active_users:
