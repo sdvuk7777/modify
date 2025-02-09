@@ -61,7 +61,7 @@ def get_shortened_url(bot_username, user_id):
         verification_url = f"https://t.me/{bot_username}?start={unique_code}"
         shortener_api = "https://modijiurl.com/api"
         api_key = "0f0f258c98cbf7a0a03eafc27dfd5ab5edbfdffc"
-        api_url = f"{shortener_api}?api={api_key}&url={verification_url}&alias=SDV_UKxyz"
+        api_url = f"{shortener_api}?api={api_key}&url={verification_url}&alias=SDV_UKs"
 
         # Request shortened URL from API
         response = requests.get(api_url)
