@@ -11,7 +11,6 @@ import asyncio
 import requests
 import subprocess
 from datetime import datetime, timedelta
-import hashlib
 
 import core as helper
 from utils import progress_bar
@@ -32,8 +31,6 @@ MAX_USERS = 5
 MAX_LINKS_PER_USER = 15
 active_users = {}
 user_daily_limits = {}
-verified_users = {}
-VERIFY_DURATION = 12 * 60 * 60
 
 bot = Client(
     "bot",
@@ -42,80 +39,9 @@ bot = Client(
     bot_token=BOT_TOKEN
 )
 
-def generate_unique_code(user_id):
-    """Generate a unique code based on user ID"""
-    try:
-        hash_object = hashlib.md5(str(user_id).encode())
-        return hash_object.hexdigest()
-    except Exception as e:
-        print(f"Error generating unique code: {e}")
-        return None
-
-def get_shortened_url(bot_username, user_id):
-    """Fetch shortened URL from modijiurl API with error handling"""
-    try:
-        unique_code = generate_unique_code(user_id)
-        if not unique_code:
-            return f"https://t.me/{bot_username}"
-
-        verification_url = f"https://t.me/{bot_username}?start={unique_code}"
-        shortener_api = "https://modijiurl.com/api"
-        api_key = "0f0f258c98cbf7a0a03eafc27dfd5ab5edbfdffc"
-        api_url = f"{shortener_api}?api={api_key}&url={verification_url}&alias=SDV_UKs"
-
-        # Request shortened URL from API
-        response = requests.get(api_url)
-        response.raise_for_status()
-        
-        data = response.json()
-        short_url = data.get("shortenedUrl")
-        
-        if short_url and short_url.startswith("http"):
-            return short_url
-        else:
-            print(f"Invalid API response: {data}")
-            return verification_url  # Fallback to direct Telegram link
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching shortened URL: {e}")
-        return f"https://t.me/{bot_username}?start={generate_unique_code(user_id)}"
-
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    try:
-        user_id = m.from_user.id
-        args = m.text.split(" ")
-
-        if len(args) > 1:
-            unique_code = args[1]
-            expected_code = generate_unique_code(user_id)
-
-            if unique_code == expected_code:
-                verified_users[user_id] = time.time()
-                await m.reply_text("✅ Verification successful! You can now use the bot for 12 hours.")
-            else:
-                await m.reply_text("❌ Invalid verification code. Please verify again.")
-        else:
-            if user_id in verified_users:
-                elapsed_time = time.time() - verified_users[user_id]
-                if elapsed_time < VERIFY_DURATION:
-                    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋✨\n\nI am a TXT Link Downloader Bot! 📥 My purpose is to extract download links from your .TXT file 📄 and upload the content directly to Telegram 📲. To get started, simply send me the /upload command and follow the prompts.🚀\n\nDon't forget to join our update channel @SDV_BOTS for the latest news and features! 📰🔔\n\nUse /stop to cancel any ongoing tasks.❌</b>")
-                    return
-                else:
-                    del verified_users[user_id]
-
-            short_url = get_shortened_url(bot.me.username, user_id)
-            if not short_url.startswith("http"):
-                short_url = f"https://t.me/{bot.me.username}"  # Ensure valid URL
-
-            await m.reply_text(
-                "🚫 You are not verified. Please verify to continue.",
-                reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("Verify Now", url=short_url)]
-                ])
-            )
-    except Exception as e:
-        print(f"Error in start_handler: {e}")
-        await m.reply_text("⚠️ An unexpected error occurred. Please try again later.")
+    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋✨\n\nI am a TXT Link Downloader Bot! 📥 My purpose is to extract download links from your .TXT file 📄 and upload the content directly to Telegram 📲. To get started, simply send me the /upload command and follow the prompts.🚀\n\nDon't forget to join our update channel @SDV_BOTS for the latest news and features! 📰🔔\n\nUse /stop to cancel any ongoing tasks.❌</b>")
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
@@ -125,20 +51,6 @@ async def restart_handler(_, m):
 @bot.on_message(filters.command(["upload"]))
 async def upload(bot: Client, m: Message):
     user_id = m.from_user.id
-
-    # Check if user is verified
-    if user_id not in verified_users or (time.time() - verified_users[user_id]) > VERIFY_DURATION:
-        short_url = get_shortened_url(bot.me.username, user_id)
-        if not short_url.startswith("http"):
-            short_url = f"https://t.me/{bot.me.username}"  # Ensure valid URL
-
-        await m.reply_text(
-            "🚫 You are not verified. Please verify to continue.",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("Verify Now", url=short_url)]
-            ])
-        )
-        return
 
     # Check if the user has exceeded daily limit
     if user_id in user_daily_limits:
